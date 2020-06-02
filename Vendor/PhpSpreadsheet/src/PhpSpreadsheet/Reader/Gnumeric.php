@@ -5,6 +5,7 @@ namespace PhpOffice\PhpSpreadsheet\Reader;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use PhpOffice\PhpSpreadsheet\NamedRange;
+use PhpOffice\PhpSpreadsheet\Reader\Security\XmlScanner;
 use PhpOffice\PhpSpreadsheet\ReferenceHelper;
 use PhpOffice\PhpSpreadsheet\RichText\RichText;
 use PhpOffice\PhpSpreadsheet\Settings;
@@ -16,6 +17,7 @@ use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\Borders;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\Font;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use XMLReader;
 
 class Gnumeric extends BaseReader
@@ -34,16 +36,15 @@ class Gnumeric extends BaseReader
      */
     public function __construct()
     {
-        $this->readFilter = new DefaultReadFilter();
+        parent::__construct();
         $this->referenceHelper = ReferenceHelper::getInstance();
+        $this->securityScanner = XmlScanner::getInstance($this);
     }
 
     /**
      * Can the current IReader read the file?
      *
      * @param string $pFilename
-     *
-     * @throws Exception
      *
      * @return bool
      */
@@ -57,7 +58,7 @@ class Gnumeric extends BaseReader
         }
 
         // Read signature data (first 3 bytes)
-        $fh = fopen($pFilename, 'r');
+        $fh = fopen($pFilename, 'rb');
         $data = fread($fh, 2);
         fclose($fh);
 
@@ -76,7 +77,7 @@ class Gnumeric extends BaseReader
         File::assertFile($pFilename);
 
         $xml = new XMLReader();
-        $xml->xml($this->securityScanFile('compress.zlib://' . realpath($pFilename)), null, Settings::getLibXmlLoaderOptions());
+        $xml->xml($this->securityScanner->scanFile('compress.zlib://' . realpath($pFilename)), null, Settings::getLibXmlLoaderOptions());
         $xml->setParserProperty(2, true);
 
         $worksheetNames = [];
@@ -105,7 +106,7 @@ class Gnumeric extends BaseReader
         File::assertFile($pFilename);
 
         $xml = new XMLReader();
-        $xml->xml($this->securityScanFile('compress.zlib://' . realpath($pFilename)), null, Settings::getLibXmlLoaderOptions());
+        $xml->xml($this->securityScanner->scanFile('compress.zlib://' . realpath($pFilename)), null, Settings::getLibXmlLoaderOptions());
         $xml->setParserProperty(2, true);
 
         $worksheetInfo = [];
@@ -166,8 +167,6 @@ class Gnumeric extends BaseReader
      *
      * @param string $pFilename
      *
-     * @throws Exception
-     *
      * @return Spreadsheet
      */
     public function load($pFilename)
@@ -183,9 +182,6 @@ class Gnumeric extends BaseReader
      * Loads from file into Spreadsheet instance.
      *
      * @param string $pFilename
-     * @param Spreadsheet $spreadsheet
-     *
-     * @throws Exception
      *
      * @return Spreadsheet
      */
@@ -195,7 +191,7 @@ class Gnumeric extends BaseReader
 
         $gFileData = $this->gzfileGetContents($pFilename);
 
-        $xml = simplexml_load_string($this->securityScan($gFileData), 'SimpleXMLElement', Settings::getLibXmlLoaderOptions());
+        $xml = simplexml_load_string($this->securityScanner->scan($gFileData), 'SimpleXMLElement', Settings::getLibXmlLoaderOptions());
         $namespacesMeta = $xml->getNamespaces(true);
 
         $gnmXML = $xml->children($namespacesMeta['gnm']);
@@ -264,7 +260,7 @@ class Gnumeric extends BaseReader
 
                             break;
                         case 'user-defined':
-                            list(, $attrName) = explode(':', $attributes['name']);
+                            [, $attrName] = explode(':', $attributes['name']);
                             switch ($attrName) {
                                 case 'publisher':
                                     $docProps->setCompany(trim($propertyValue));
@@ -431,7 +427,7 @@ class Gnumeric extends BaseReader
                             break;
                         case '20':        //    Boolean
                             $type = DataType::TYPE_BOOL;
-                            $cell = ($cell == 'TRUE') ? true : false;
+                            $cell = $cell == 'TRUE';
 
                             break;
                         case '30':        //    Integer
@@ -476,7 +472,7 @@ class Gnumeric extends BaseReader
                     $endColumn = ($styleAttributes['endCol'] > $maxCol) ? $maxCol : (int) $styleAttributes['endCol'];
                     $endColumn = Coordinate::stringFromColumnIndex($endColumn + 1);
                     $endRow = ($styleAttributes['endRow'] > $maxRow) ? $maxRow : $styleAttributes['endRow'];
-                    $endRow += 1;
+                    ++$endRow;
                     $cellRange = $startColumn . $startRow . ':' . $endColumn . $endRow;
 
                     $styleAttributes = $styleRegion->Style->attributes();
@@ -535,8 +531,8 @@ class Gnumeric extends BaseReader
                                     break;
                             }
 
-                            $styleArray['alignment']['wrapText'] = ($styleAttributes['WrapText'] == '1') ? true : false;
-                            $styleArray['alignment']['shrinkToFit'] = ($styleAttributes['ShrinkToFit'] == '1') ? true : false;
+                            $styleArray['alignment']['wrapText'] = $styleAttributes['WrapText'] == '1';
+                            $styleArray['alignment']['shrinkToFit'] = $styleAttributes['ShrinkToFit'] == '1';
                             $styleArray['alignment']['indent'] = ((int) ($styleAttributes['Indent']) > 0) ? $styleAttributes['indent'] : 0;
 
                             $RGB = self::parseGnumericColour($styleAttributes['Fore']);
@@ -634,9 +630,9 @@ class Gnumeric extends BaseReader
                             $fontAttributes = $styleRegion->Style->Font->attributes();
                             $styleArray['font']['name'] = (string) $styleRegion->Style->Font;
                             $styleArray['font']['size'] = (int) ($fontAttributes['Unit']);
-                            $styleArray['font']['bold'] = ($fontAttributes['Bold'] == '1') ? true : false;
-                            $styleArray['font']['italic'] = ($fontAttributes['Italic'] == '1') ? true : false;
-                            $styleArray['font']['strikethrough'] = ($fontAttributes['StrikeThrough'] == '1') ? true : false;
+                            $styleArray['font']['bold'] = $fontAttributes['Bold'] == '1';
+                            $styleArray['font']['italic'] = $fontAttributes['Italic'] == '1';
+                            $styleArray['font']['strikethrough'] = $fontAttributes['StrikeThrough'] == '1';
                             switch ($fontAttributes['Underline']) {
                                 case '1':
                                     $styleArray['font']['underline'] = Font::UNDERLINE_SINGLE;
@@ -713,7 +709,7 @@ class Gnumeric extends BaseReader
                     $columnAttributes = $columnOverride->attributes();
                     $column = $columnAttributes['No'];
                     $columnWidth = $columnAttributes['Unit'] / 5.4;
-                    $hidden = ((isset($columnAttributes['Hidden'])) && ($columnAttributes['Hidden'] == '1')) ? true : false;
+                    $hidden = (isset($columnAttributes['Hidden'])) && ($columnAttributes['Hidden'] == '1');
                     $columnCount = (isset($columnAttributes['Count'])) ? $columnAttributes['Count'] : 1;
                     while ($c < $column) {
                         $spreadsheet->getActiveSheet()->getColumnDimension(Coordinate::stringFromColumnIndex($c + 1))->setWidth($defaultWidth);
@@ -743,7 +739,7 @@ class Gnumeric extends BaseReader
                     $rowAttributes = $rowOverride->attributes();
                     $row = $rowAttributes['No'];
                     $rowHeight = $rowAttributes['Unit'];
-                    $hidden = ((isset($rowAttributes['Hidden'])) && ($rowAttributes['Hidden'] == '1')) ? true : false;
+                    $hidden = (isset($rowAttributes['Hidden'])) && ($rowAttributes['Hidden'] == '1');
                     $rowCount = (isset($rowAttributes['Count'])) ? $rowAttributes['Count'] : 1;
                     while ($r < $row) {
                         ++$r;
@@ -784,7 +780,7 @@ class Gnumeric extends BaseReader
                     continue;
                 }
 
-                $range = explode('!', $range);
+                $range = Worksheet::extractSheetTitle($range, true);
                 $range[0] = trim($range[0], "'");
                 if ($worksheet = $spreadsheet->getSheetByName($range[0])) {
                     $extractedRange = str_replace('$', '', $range[1]);
@@ -876,7 +872,7 @@ class Gnumeric extends BaseReader
 
     private static function parseGnumericColour($gnmColour)
     {
-        list($gnmR, $gnmG, $gnmB) = explode(':', $gnmColour);
+        [$gnmR, $gnmG, $gnmB] = explode(':', $gnmColour);
         $gnmR = substr(str_pad($gnmR, 4, '0', STR_PAD_RIGHT), 0, 2);
         $gnmG = substr(str_pad($gnmG, 4, '0', STR_PAD_RIGHT), 0, 2);
         $gnmB = substr(str_pad($gnmB, 4, '0', STR_PAD_RIGHT), 0, 2);

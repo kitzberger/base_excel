@@ -8,18 +8,18 @@ $EM_CONF[$_EXTKEY] = array(
     'title' => 'Excel Library',
     'description' => 'This provides the PhpSpreadsheet library, formerly phpExcel from phpOffice.',
     'category' => 'misc',
-    'version' => '0.0.1',
+    'version' => '0.1.0',
     'state' => 'stable',
     'uploadfolder' => 0,
     'createDirs' => '',
     'clearcacheonload' => 1,
-    'author' => 'Maarten Balliauw, Mark Baker, Franck Lefevre, Erik Tilt, Franz Holzinger',
+    'author' => 'PhpSpreadsheet developers, Franz Holzinger',
     'author_email' => 'franz@ttproducts.de',
     'author_company' => 'jambage.com',
     'constraints' => array(
         'depends' => array(
-            'php' => '5.6.0-7.0.99',
-            'typo3' => '6.2.0-9.99.99'
+            'php' => '7.2.0-7.3.99',
+            'typo3' => '7.6.0-9.99.99'
         ),
         'conflicts' => array(
         ),

@@ -34,15 +34,16 @@
     }
   ],
   "license": [
-    "GPL-2.0+"
+    "GPL-2.0-or-later"
   ],
   "require": {
     "typo3/cms-core": ">=6.2.0,<9.99.99",
-    "php": "^5.6|^7.0",
+    "php": "^7.2",
     "ext-ctype": "*",
     "ext-dom": "*",
     "ext-gd": "*",
     "ext-iconv": "*",
+    "ext-fileinfo": "*",
     "ext-libxml": "*",
     "ext-mbstring": "*",
     "ext-SimpleXML": "*",
@@ -59,7 +60,7 @@
     }
   },
   "replace": {
-    "base_excel": "self.version",
+    "jambagecom/base-excel": "self.version",
     "typo3-ter/base-excel": "self.version"
   },
   "extra": {
