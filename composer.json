@@ -29,6 +29,9 @@
         "name": "Erik Tilt"
     },
     {
+        "name": "Adrien Crivelli"
+    },
+    {
       "name": "Franz Holzinger",
       "homepage": "https://ttproducts.de"
     }
@@ -56,7 +59,8 @@
   },
   "autoload": {
     "psr-4": {
-        "PhpOffice\\PhpSpreadsheet\\": "Vendor/PhpSpreadsheet/src/PhpSpreadsheet"
+        "PhpOffice\\PhpSpreadsheet\\": "Vendor/PhpSpreadsheet/src/PhpSpreadsheet",
+        "JambageCom\\BaseExcel\\": "Classes"
     }
   },
   "replace": {

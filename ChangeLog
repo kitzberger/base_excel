@@ -1,3 +1,6 @@
+2020-06-14 Franz Holzinger <franz@ttproducts.de>
+    * add Api\PhpSpreadsheet with the missing method copyRow
+
 2020-06-02 Franz Holzinger <franz@ttproducts.de>
     * upgrade to PhpSpreadsheet-1.13.0. See the file Vendor/version.txt .
 

@@ -24,7 +24,7 @@ $EM_CONF[$_EXTKEY] = array(
         'conflicts' => array(
         ),
         'suggests' => array(
-            'base_cache' => '0.0.1-0.0.0'
+            'base_cache' => '0.0.3-0.0.0'
         ),
     ),
 );
