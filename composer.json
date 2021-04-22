@@ -84,6 +84,7 @@
 		"extension-release": [
 			"@extension-build",
 			"rm -rf Tests/",
+			"rm .editorconfig",
 			"rm .gitattributes",
 			"rm .gitignore"
 		],
