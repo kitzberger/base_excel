@@ -18,8 +18,8 @@ $EM_CONF[$_EXTKEY] = [
     'author_company'   => 'jambage.com',
     'constraints'      => [
         'depends'   => [
-            'php'   => '7.2.0-',
-            'typo3' => '10.4.0-',
+            'php'   => '7.2.0-8.0.0',
+            'typo3' => '9.5.0-10.4.99',
         ],
         'conflicts' => [
         ],
