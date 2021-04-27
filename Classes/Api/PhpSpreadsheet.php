@@ -15,53 +15,46 @@ namespace JambageCom\BaseExcel\Api;
  * The TYPO3 project - inspiring people to share!
  */
 
- 
+
 /**
  * Part of the base_excel (PhpSpreadsheet library) extension.
  *
  * PhpSpreadsheet API functions
  *
- * @author  Franz Holzinger <franz@ttproducts.de>
- * @maintainer	Franz Holzinger <franz@ttproducts.de>
- * @package TYPO3
- * @subpackage base_excel
- *
- *
+ * @author        Franz Holzinger <franz@ttproducts.de>
+ * @maintainer    Franz Holzinger <franz@ttproducts.de>
+ * @package       TYPO3
+ * @subpackage    base_excel
  */
-
-
-
-
-class PhpSpreadsheet implements \TYPO3\CMS\Core\SingletonInterface {
+class PhpSpreadsheet implements \TYPO3\CMS\Core\SingletonInterface
+{
 
     /**
      * copy a complete row with all columns, their values, styles and formats
      *
      * see: https://stackoverflow.com/questions/29341713/phpexcel-fast-duplicate-row
-     * 
-     * @param   object      language object of type \JambageCom\Div2007\Base\TranslationBase
-     * @param   string      value
-     * @param   array       value array in the format used in TCA
+     *
+     * @param object      language object of type \JambageCom\Div2007\Base\TranslationBase
+     * @param string      value
+     * @param array       value array in the format used in TCA
+     *
      * @return  string      text for the value if found
      */
-    static public function copyRow (
-        &$fromWorkspace, 
+    static public function copyRow(
+        &$fromWorkspace,
         &$toWorkspace,
         $fromRow,
         $toRow
-    )
-    {
-        $toWorkspace->getRowDimension($toRow)->
-            setRowHeight(
-                $fromWorkspace->getRowDimension($fromRow)->getRowHeight()
-            );
+    ) {
+        $toWorkspace->getRowDimension($toRow)->setRowHeight(
+            $fromWorkspace->getRowDimension($fromRow)->getRowHeight()
+        );
         $lastColumn = $fromWorkspace->getHighestColumn();
         for ($column = 'A'; $column <= $lastColumn; ++$column) {
             $fromCell = $fromWorkspace->getCell($column . $fromRow);
-            $toCell = $toWorkspace->getCell($column . $toRow);
+            $toCell   = $toWorkspace->getCell($column . $toRow);
             $toCell->setXfIndex($fromCell->getXfIndex());
             $toCell->setValue($fromCell->getValue());
         }
     }
 }
-
