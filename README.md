@@ -13,7 +13,7 @@ https://extensions.typo3.org/extension/base_excel
 
 For developers
 --------------
-In case TYPO3 does not run in composer mode, the library directory can be rebuild by running `composer run-script extension-create-libs`
+In case TYPO3 does not run in composer mode, the library directory can be rebuilt by running `composer run-script extension-create-libs`
 
 For contributors
 ----------------
