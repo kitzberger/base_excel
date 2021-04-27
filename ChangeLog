@@ -1,3 +1,7 @@
+
+2021-04-27 Franz Holzinger <franz@ttproducts.de>
+    * issue  #2: TYPO3 10.4 and new structure. All library files are removed from Github. See the file README.md . This is a contribution from cjanody.
+
 2020-06-14 Franz Holzinger <franz@ttproducts.de>
     * add Api\PhpSpreadsheet with the missing method copyRow
 
