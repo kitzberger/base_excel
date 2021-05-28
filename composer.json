@@ -72,9 +72,9 @@
 		],
 		"extension-create-libs": [
 			"mkdir -p Libraries/temp",
-			"[ -f $HOME/.composer/vendor/bin/phar-composer ] || composer global require clue/phar-composer",
+			"[ -f $(composer config --global home)/vendor/bin/phar-composer ] || composer global require clue/phar-composer",
 			"if [ ! -f Libraries/phpoffice-phpspreadsheet.phar ]; then cd Libraries/temp && composer require phpoffice/phpspreadsheet=^1.17 && composer config classmap-authoritative true && composer config prepend-autoloader false && composer dump-autoload; fi",
-			"[ -f Libraries/phpoffice-phpspreadsheet.phar ] || $HOME/.composer/vendor/bin/phar-composer build Libraries/temp/ Libraries/phpoffice-phpspreadsheet.phar",
+			"[ -f Libraries/phpoffice-phpspreadsheet.phar ] || $(composer config --global home)/vendor/bin/phar-composer build Libraries/temp/ Libraries/phpoffice-phpspreadsheet.phar",
 			"chmod -x Libraries/*.phar",
 			"rm -rf Libraries/temp"
 		],
@@ -84,9 +84,9 @@
 		"extension-release": [
 			"@extension-build",
 			"rm -rf Tests/",
-			"rm .editorconfig",
-			"rm .gitattributes",
-			"rm .gitignore"
+			"rm -f .editorconfig",
+			"rm -f .gitattributes",
+			"rm -f .gitignore"
 		],
 		"extension-clean": [
 			"rm -rf Libraries"
