@@ -26,9 +26,10 @@ In case TYPO3 does not run in composer mode, the library directory can be rebuil
  
 For contributors
 ----------------
-- To build the TER package, you must run `composer run-script extension-release` before generating the archive.
+- To build the TER package, you must delete the file *Libraries/phpoffice-phpspreadsheet.phar*
+  and run `composer run-script extension-release` fore generating the archive.
 - At the beginning you will get the question: 
     *"No composer.json in current directory, do you want to use the one at /var/www/html/typo3conf/ext/base_excel? [Y,n]?"*. 
-- Here you must answer with **N**. 
+-- Here you must answer with **N**. 
 - Then everything will be downloaded and the resulting file 
 *Library/phpoffice-phpspreadsheet.phar* will be generated.

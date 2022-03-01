@@ -44,8 +44,9 @@
 		"GPL-2.0-or-later"
 	],
 	"require": {
-		"typo3/cms-core": "^9.5 || ^10.4",
-		"phpoffice/phpspreadsheet": "^1.17"
+        "php": "^7.3 || ^8.0",
+		"typo3/cms-core": "^9.5 || ^10.4 || ^11.5",
+		"phpoffice/phpspreadsheet": "^1.22"
 	},
 	"autoload": {
 		"psr-4": {
@@ -53,7 +54,6 @@
 		}
 	},
 	"replace": {
-		"jambagecom/base-excel": "self.version",
 		"typo3-ter/base-excel": "self.version"
 	},
 	"extra": {
@@ -63,7 +63,13 @@
 	},
 	"config": {
 		"vendor-dir": ".Build/vendor",
-		"bin-dir": ".Build/bin"
+		"bin-dir": ".Build/bin",
+		"allow-plugins": {
+			"typo3/cms-composer-installers": true,
+			"typo3/class-alias-loader": true
+		},
+		"classmap-authoritative": true,
+		"prepend-autoloader": false
 	},
 	"scripts": {
 		"post-autoload-dump": [

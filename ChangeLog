@@ -1,3 +1,6 @@
+2022-03-01 Franz Holzinger <franz@ttproducts.de>
+    * PhpSpreadsheet 1.22
+
 2021-05-24 Cyril Janody <cyril.janody@fsg.ulaval.ca>
     * pull #4: Optimization of the composer «extension-release» script
 
