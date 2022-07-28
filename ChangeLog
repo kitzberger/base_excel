@@ -1,11 +1,6 @@
-2022-07-22 Franz Holzinger <franz@ttproducts.de>
-    * PhpSpreadsheet 1.24.1 
-
-2022-03-01 Franz Holzinger <franz@ttproducts.de>
-    * PhpSpreadsheet 1.22
-
-2021-05-24 Cyril Janody <cyril.janody@fsg.ulaval.ca>
-    * pull #4: Optimization of the composer «extension-release» script
+2022-07-23 Franz Holzinger <franz@ttproducts.de>
+    * PhpSpreadsheet 1.24.1
+    * add requirement for base_zip extension
 
 2021-04-27 Franz Holzinger <franz@ttproducts.de>
     * issue  #2: TYPO3 10.4 and new structure. All library files are removed from Github. See the file README.md . This has been contributed by cjanody.

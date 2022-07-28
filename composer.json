@@ -1,101 +1,79 @@
 {
-	"name": "jambagecom/base-excel",
-	"type": "typo3-cms-extension",
-	"description": "This provides the PhpSpreadsheet library, formerly phpExcel, from phpOffice.",
-	"keywords": [
-		"TYPO3",
-		"extension",
-		"excel",
-		"phpOffice"
-	],
-	"support": {
-		"issues": "https://github.com/franzholz/base_excel/issues"
-	},
-	"homepage": "https://jambage.com",
-	"authors": [
-		{
-			"name": "Maarten Balliauw",
-			"homepage": "http://blog.maartenballiauw.be"
-		},
-		{
-			"name": "Mark Baker",
-			"homepage": "http://markbakeruk.net"
-		},
-		{
-			"name": "Franck Lefevre",
-			"homepage": "http://rootslabs.net"
-		},
-		{
-			"name": "Erik Tilt"
-		},
-		{
-			"name": "Adrien Crivelli"
-		},
-		{
-			"name": "Franz Holzinger",
-			"homepage": "https://ttproducts.de"
-		},
-		{
-			"name": "Cyril Janody",
-			"homepage": "https://www.fsg.ulaval.ca"
-		}
-	],
-	"license": [
-		"GPL-2.0-or-later"
-	],
-	"require": {
-        "php": "^7.3 || ^8.0",
-		"typo3/cms-core": "^9.5 || ^10.4 || ^11.5",
-		"phpoffice/phpspreadsheet": "^1.22"
-	},
-	"autoload": {
-		"psr-4": {
-			"JambageCom\\BaseExcel\\": "Classes"
-		}
-	},
-	"replace": {
-		"typo3-ter/base-excel": "self.version"
-	},
-	"extra": {
-		"typo3/cms": {
-			"extension-key": "base_excel"
-		}
-	},
-	"config": {
-		"vendor-dir": ".Build/vendor",
-		"bin-dir": ".Build/bin",
-		"allow-plugins": {
-			"typo3/cms-composer-installers": true,
-			"typo3/class-alias-loader": true
-		},
-		"classmap-authoritative": true,
-		"prepend-autoloader": false
-	},
-	"scripts": {
-		"post-autoload-dump": [
-			"mkdir -p .Build/Web/typo3conf/ext/",
-			"[ -L .Build/Web/typo3conf/ext/base_excel ] || ln -snvf ../../../../. .Build/Web/typo3conf/ext/base_excel"
-		],
-		"extension-create-libs": [
-			"mkdir -p Libraries/temp",
-			"[ -f $(composer config --global home)/vendor/bin/phar-composer ] || composer global require clue/phar-composer",
-			"if [ ! -f Libraries/phpoffice-phpspreadsheet.phar ]; then cd Libraries/temp && composer require phpoffice/phpspreadsheet=^1.17 && composer config classmap-authoritative true && composer config prepend-autoloader false && composer dump-autoload; fi",
-			"[ -f Libraries/phpoffice-phpspreadsheet.phar ] || $(composer config --global home)/vendor/bin/phar-composer build Libraries/temp/ Libraries/phpoffice-phpspreadsheet.phar",
-			"chmod -x Libraries/*.phar",
-			"rm -rf Libraries/temp"
-		],
-		"extension-build": [
-			"@extension-create-libs"
-		],
-		"extension-release": [
-			"@extension-build",
-			"rm -rf Tests/",
-			"rm -f .editorconfig",
-			"rm -f .gitattributes",
-			"rm -f .gitignore"
-		],
-		"extension-clean": [
-			"rm -rf Libraries"
-		]
-	}
+  "name": "jambagecom/base-excel",
+  "type": "typo3-cms-extension",
+  "description": "This provides the PhpSpreadsheet library, formerly phpExcel, from phpOffice.",
+  "keywords": [
+    "TYPO3",
+    "extension",
+    "excel",
+    "phpOffice"
+  ],
+  "support": {
+    "issues": "https://github.com/franzholz/base_excel/issues"
+  },
+  "homepage": "https://jambage.com",
+  "authors": [
+    {
+        "name": "Maarten Balliauw",
+        "homepage": "http://blog.maartenballiauw.be"
+    },
+    {
+        "name": "Mark Baker",
+        "homepage": "http://markbakeruk.net"
+    },
+    {
+        "name": "Franck Lefevre",
+        "homepage": "http://rootslabs.net"
+    },
+    {
+        "name": "Erik Tilt"
+    },
+    {
+        "name": "Adrien Crivelli"
+    },
+    {
+      "name": "Franz Holzinger",
+      "homepage": "https://ttproducts.de"
+    }
+  ],
+  "license": [
+    "GPL-2.0-or-later"
+  ],
+  "require": {
+    "typo3/cms-core": ">=8.5.0,<9.99.99",
+       "php": "^7.3 || ^8.0",
+        "ext-ctype": "*",
+        "ext-dom": "*",
+        "ext-fileinfo": "*",
+        "ext-gd": "*",
+        "ext-iconv": "*",
+        "ext-libxml": "*",
+        "ext-mbstring": "*",
+        "ext-simplexml": "*",
+        "ext-xml": "*",
+        "ext-xmlreader": "*",
+        "ext-xmlwriter": "*",
+        "ext-zip": "*",
+        "ext-zlib": "*",
+        "jambagecom/base-complex": "^0.0",
+        "jambagecom/base-html": "^0.0",
+        "jambagecom/base-matrix": "^0.0",
+        "jambagecom/base-zip": "^0.0",
+        "psr/http-client": "^1.0",
+        "psr/http-factory": "^1.0",
+   },
+  "autoload": {
+    "psr-4": {
+        "PhpOffice\\PhpSpreadsheet\\": "Vendor/PhpSpreadsheet/src/PhpSpreadsheet",
+        "JambageCom\\BaseExcel\\": "Classes"
+    }
+  },
+  "replace": {
+    "typo3-ter/base-excel": "self.version"
+  },
+  "extra": {
+    "typo3/cms": {
+      "extension-key": "base_excel"
+    }
+  }
 }
