@@ -1,33 +1,42 @@
-base_excel
-==========
-This provides the PhpSpreadsheet library, formerly phpExcel, from phpOffice. All the library classes are
-available in the extension file *Library/phpoffice-phpspreadsheet.phar* which is automatically included
+# TYPO3 extension base_enum
+
+## What is does
+
+This extension brings the "PhpSpreadsheet library" PHP classes "phpoffice/phpspreadsheet", formerly phpExcel, to TYPO3.
+
+## What is the origin
+
+See https://github.com/PHPOffice/PhpSpreadsheet/tree/1.28.0
+
+All the library classes are available in the extension file
+*Library/phpoffice-phpspreadsheet.phar* which is automatically included
 upon activation in the extension manager by composer or autoloader.
 
-Installation
-------------
+## Documentation
+
+https://github.com/PHPOffice/PhpSpreadsheet/tree/1.28.0
+
+## Installation
 Via composer or the TER.
 
 ### Composer
 `composer req jambagecom/base-excel`
+
 ### TER
 https://extensions.typo3.org/extension/base_excel
 
-phar-composer
---------------
+#### phar-composer
 Get it from here:
 https://github.com/clue/phar-composer
 
-For developers
---------------
+#### For developers
 In case TYPO3 does not run in composer mode, the library directory can be rebuilt by 
 - running `composer run-script extension-create-libs`. 
 - See chapter contributors.
- 
-For contributors
-----------------
+
+#### For contributors
 - To build the TER package, you must delete the file *Libraries/phpoffice-phpspreadsheet.phar*
-  and run `composer run-script extension-release` for generating the archive.
+  and run the command `composer run-script extension-release` in the extension folder for generating the archive.
 - At the beginning you will get the question: 
     *"No composer.json in current directory, do you want to use the one at /var/www/html/typo3conf/ext/base_excel? [Y,n]?"*. 
 -- Here you must answer with **N**. 
