@@ -6,7 +6,7 @@ This extension brings the "PhpSpreadsheet library" PHP classes "phpoffice/phpspr
 
 ## What is the origin
 
-See https://github.com/PHPOffice/PhpSpreadsheet/tree/1.28.0
+See https://github.com/PHPOffice/PhpSpreadsheet/tree/1.29.0
 
 All the library classes are available in the extension file
 *Library/phpoffice-phpspreadsheet.phar* which is automatically included
@@ -14,7 +14,7 @@ upon activation in the extension manager by composer or autoloader.
 
 ## Documentation
 
-https://github.com/PHPOffice/PhpSpreadsheet/tree/1.28.0
+https://github.com/PHPOffice/PhpSpreadsheet/tree/1.29.0
 
 ## Installation
 Via composer or the TER.

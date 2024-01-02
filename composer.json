@@ -45,7 +45,7 @@
 	],
 	"require": {
 		"typo3/cms-core": "^10.4 || ^11.5 || ^12.4",
-		"phpoffice/phpspreadsheet": "^1.28"
+		"phpoffice/phpspreadsheet": "^1.29"
 	},
 	"autoload": {
 		"psr-4": {
